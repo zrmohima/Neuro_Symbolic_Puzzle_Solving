@@ -1,0 +1,6 @@
+{
+  "source_run": "out/qwen3-8b-4bit-4x4-v3-thinking",
+  "source_calls_sha256": "becd0d9d76d39171726785c3bb4079508b8d6df36e7ef476d265b52c472733fe",
+  "source_predictions_sha256": "57bb3e783dd712e7e4e504521e6655fed780d5391463e6d1262ffd800c01af5a",
+  "note": "Original manifest paths and source hashes refer to historical workspace; packaged code is reorganized. Raw text and prompts preserved. Completed archived runs are not resume directories."
+}

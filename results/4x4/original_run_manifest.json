@@ -1,0 +1,41 @@
+{
+  "out": "out/qwen3-8b-4bit-4x4-v3-thinking",
+  "gold": "data/grid_mode/test-00000-of-00001.parquet",
+  "model": "models/Qwen3-8B-4bit",
+  "limit": 20,
+  "max_tokens": 8192,
+  "thinking": true,
+  "ids": [
+    "lgp-test-4x4-27",
+    "lgp-test-4x4-3",
+    "lgp-test-4x4-21",
+    "lgp-test-4x4-16",
+    "lgp-test-4x4-13",
+    "lgp-test-4x4-26",
+    "lgp-test-4x4-28",
+    "lgp-test-4x4-36",
+    "lgp-test-4x4-35",
+    "lgp-test-4x4-10",
+    "lgp-test-4x4-9",
+    "lgp-test-4x4-19",
+    "lgp-test-4x4-29",
+    "lgp-test-4x4-14",
+    "lgp-test-4x4-30",
+    "lgp-test-4x4-2",
+    "lgp-test-4x4-5",
+    "lgp-test-4x4-11",
+    "lgp-test-4x4-24",
+    "lgp-test-4x4-23"
+  ],
+  "version": "per-clue-v3",
+  "source_sha256": "b651336d10f53f00e2f3366b9261fc00b19a5b4c4405a3dece3b79efc4c496cf",
+  "solver_sha256": "cd487091954855dc7d90c1f2986a0f0203e70b7f45f7443fbb150c6705977a92",
+  "gold_sha256": "545cd5cce9c54575c7f74769b8f1250b8bb94f5745519c83b99b8db01f95924d",
+  "data_sha256": "0886953f65988c2c14965192e8df0abf345dd84a31657bdb4f78fdf004907bc6",
+  "quantization": {
+    "group_size": 64,
+    "bits": 4
+  },
+  "decoding": "greedy",
+  "seed": 0
+}

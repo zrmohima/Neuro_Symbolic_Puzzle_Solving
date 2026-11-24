@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+models/
+.hf-cache/
+/datasets/public/
+datasets/private/
+runs/
+.DS_Store
+*.zip

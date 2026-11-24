@@ -1,0 +1,14 @@
+{
+  "direct": {
+    "model_calls": 20,
+    "generation_seconds": 7247.544949042145,
+    "generation_tokens": 108631,
+    "token_limit_hits": 5
+  },
+  "symbolic": {
+    "model_calls": 201,
+    "generation_seconds": 15062.071556379553,
+    "generation_tokens": 249257,
+    "token_limit_hits": 4
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "direct": {
+    "completed": 20,
+    "fully_correct": 16,
+    "puzzle_accuracy": 0.8,
+    "correct_cells": 192,
+    "total_cells": 240,
+    "cell_accuracy": 0.8,
+    "errors": 4
+  },
+  "symbolic": {
+    "completed": 20,
+    "fully_correct": 14,
+    "puzzle_accuracy": 0.7,
+    "correct_cells": 168,
+    "total_cells": 240,
+    "cell_accuracy": 0.7,
+    "errors": 6
+  }
+}
