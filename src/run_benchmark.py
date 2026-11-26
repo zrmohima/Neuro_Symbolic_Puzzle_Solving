@@ -4,6 +4,7 @@ from pathlib import Path
 import pyarrow.parquet as pq
 from answer_validation import normalize_answer
 from solver import domains, parse_json, solve, score, OutputError, integer, summarize
+from translation_eval import evaluate_translation
 
 EXAMPLES = '''Examples from unrelated, invented puzzles (not benchmark solutions):
 Clue: Mira is in house 3.
@@ -61,18 +62,22 @@ def main():
     p.add_argument('--size',default='2*2')
     p.add_argument('--limit',type=int,default=20)
     p.add_argument('--max-tokens',type=int,default=8192)
+    p.add_argument('--seed',type=int,default=0)
+    p.add_argument('--temperature',type=float,default=0.0)
     p.add_argument('--thinking',action=argparse.BooleanOptionalAction,default=True)
     p.add_argument('--prepare-only',action='store_true')
     a=p.parse_args(); out=Path(a.out); out.mkdir(parents=True,exist_ok=True)
     rows=[r for r in pq.read_table('datasets/public/grid_mode.parquet').to_pylist() if r['size']==a.size][:a.limit]
-    if not rows or a.max_tokens<1: raise ValueError('Invalid limit or budget')
+    if not rows or a.max_tokens<1 or a.temperature<0: raise ValueError('Invalid limit, budget or temperature')
     gold={r['id']:r for r in pq.read_table(a.gold).to_pylist()}
     for r in rows:
         g=gold[r['id']]
         assert g['puzzle']==r['puzzle'] and g['solution']['header']==r['solution']['header']
         assert score(None,g['solution']) is not None
     sha=lambda path:hashlib.sha256(Path(path).read_bytes()).hexdigest()
-    manifest={k:v for k,v in vars(a).items() if k!='prepare_only'}|{'ids':[r['id'] for r in rows], 'version':'selected-thinking-size-transfer','reference_run':'results/4x4','validator_sha256':sha(Path(__file__).with_name('answer_validation.py')),'source_sha256':sha(__file__),'solver_sha256':sha(Path(__file__).with_name('solver.py')),'gold_sha256':sha(a.gold),'data_sha256':sha('datasets/public/grid_mode.parquet'),'quantization':json.loads((Path(a.model)/'config.json').read_text()).get('quantization'),'decoding':'greedy','seed':0}
+    model_metadata=Path('datasets/metadata/model.json')
+    model_revision=json.loads(model_metadata.read_text()).get('sha') if model_metadata.exists() else None
+    manifest={k:v for k,v in vars(a).items() if k!='prepare_only'}|{'ids':[r['id'] for r in rows], 'version':'translation-eval-v1','validator_sha256':sha(Path(__file__).with_name('answer_validation.py')),'source_sha256':sha(__file__),'solver_sha256':sha(Path(__file__).with_name('solver.py')),'translation_eval_sha256':sha(Path(__file__).with_name('translation_eval.py')),'gold_sha256':sha(a.gold),'data_sha256':sha('datasets/public/grid_mode.parquet'),'model_revision':model_revision,'quantization':json.loads((Path(a.model)/'config.json').read_text()).get('quantization'),'decoding':'greedy' if a.temperature==0 else 'sampling'}
     dest=out/'manifest.json'
     if dest.exists() and json.loads(dest.read_text())!=manifest: raise ValueError('Use a new output directory for changed settings/code')
     dest.write_text(json.dumps(manifest,indent=2))
@@ -80,7 +85,7 @@ def main():
     from mlx_lm import load, stream_generate
     from mlx_lm.sample_utils import make_sampler
     import mlx.core as mx
-    mx.random.seed(0); model,tokenizer=load(a.model)
+    mx.random.seed(a.seed); model,tokenizer=load(a.model)
     callsfile=out/'calls.jsonl'; records=out/'predictions.jsonl'
     read=lambda f:[json.loads(l) for l in f.read_text().splitlines()] if f.exists() else []
     calls={r['key']:r for r in read(callsfile)}
@@ -89,7 +94,7 @@ def main():
         if key in calls: return calls[key]
         rendered=tokenizer.apply_chat_template([{'role':'user','content':prompt}],tokenize=False,add_generation_prompt=True,enable_thinking=a.thinking)
         start=time.perf_counter(); chunks=[]; last=None
-        for event in stream_generate(model,tokenizer,prompt=rendered,max_tokens=a.max_tokens,sampler=make_sampler(temp=0)):
+        for event in stream_generate(model,tokenizer,prompt=rendered,max_tokens=a.max_tokens,sampler=make_sampler(temp=a.temperature)):
             chunks.append(event.text);last=event
         if last is None: raise RuntimeError('No generation events')
         call={'key':key,'prompt':rendered,'raw':''.join(chunks),'generation_seconds':time.perf_counter()-start,'generation_tokens':last.generation_tokens,'prompt_tokens':last.prompt_tokens,'finish_reason':last.finish_reason,'hit_token_limit':last.finish_reason=='length'}
@@ -112,6 +117,7 @@ def main():
                     try:rules.append({'clue':int(num),'rule':flat_rule(parse_json(call['raw']))})
                     except (ValueError,TypeError,KeyError) as e: errors.append({'clue':int(num),'category':getattr(e,'category','invalid_schema'),'message':str(e)})
                 rec['constraints']=rules
+                rec['translation_eval']=evaluate_translation(row,gold[row['id']],rules,domains(row))
                 if not errors:
                     try:rec.update(solve(row,{'constraints':rules}))
                     except (ValueError,TypeError,KeyError,AttributeError) as e:errors.append({'category':getattr(e,'category','invalid_constraint'),'message':str(e)})

@@ -166,6 +166,18 @@ def summarize(path):
     for method in ('direct','symbolic'):
         rs=[r for r in records if r['method']==method]; scored=[r['score'] for r in rs if r['score'] is not None]
         report[method]={'completed':len(rs),'errors':sum('error' in r for r in rs),'scored':len(scored),'puzzle_accuracy':sum(s['exact'] for s in scored)/len(scored) if scored else None,'cell_accuracy':sum(s['correct_cells'] for s in scored)/sum(s['total_cells'] for s in scored) if scored else None,'unique_sat':sum(r.get('unique') is True for r in rs)}
+        if method=='symbolic' and any('translation_eval' in r for r in rs):
+            evaluations=[r['translation_eval'] for r in rs if 'translation_eval' in r]
+            total=sum(e['total_clues'] for e in evaluations)
+            consistent=sum(e['gold_consistent_clues'] for e in evaluations)
+            report[method]['translation']={
+                'total_clues':total,
+                'covered_clues':sum(e['covered_clues'] for e in evaluations),
+                'valid_clues':sum(e['valid_clues'] for e in evaluations),
+                'gold_consistent_clues':consistent,
+                'gold_consistency_rate':consistent/total if total else None,
+                'fully_gold_consistent_puzzles':sum(e['gold_consistent_clues']==e['total_clues'] and not e['extra_clues'] for e in evaluations),
+            }
     Path(path).with_name('summary.json').write_text(json.dumps(report,indent=2)); print(json.dumps(report,indent=2))
 
 

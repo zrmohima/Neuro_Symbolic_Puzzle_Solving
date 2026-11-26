@@ -1,0 +1,725 @@
+{
+  "design": {
+    "seeds": [
+      11,
+      22,
+      33
+    ],
+    "temperature": 0.7,
+    "puzzles_per_size": 20,
+    "replicates": 3
+  },
+  "sizes": {
+    "2x2": {
+      "ids": [
+        "lgp-test-2x2-33",
+        "lgp-test-2x2-18",
+        "lgp-test-2x2-16",
+        "lgp-test-2x2-1",
+        "lgp-test-2x2-38",
+        "lgp-test-2x2-24",
+        "lgp-test-2x2-34",
+        "lgp-test-2x2-28",
+        "lgp-test-2x2-26",
+        "lgp-test-2x2-29",
+        "lgp-test-2x2-5",
+        "lgp-test-2x2-17",
+        "lgp-test-2x2-4",
+        "lgp-test-2x2-20",
+        "lgp-test-2x2-13",
+        "lgp-test-2x2-10",
+        "lgp-test-2x2-31",
+        "lgp-test-2x2-37",
+        "lgp-test-2x2-23",
+        "lgp-test-2x2-22"
+      ],
+      "runs": [
+        {
+          "seed": 11,
+          "metrics": {
+            "direct": {
+              "puzzle_accuracy": 0.75,
+              "cell_accuracy": 0.75,
+              "error_rate": 0.25,
+              "mean_generation_seconds_per_puzzle": 19.87698430623859,
+              "mean_generation_tokens_per_puzzle": 416.8
+            },
+            "symbolic": {
+              "puzzle_accuracy": 1.0,
+              "cell_accuracy": 1.0,
+              "error_rate": 0.0,
+              "mean_generation_seconds_per_puzzle": 114.21798089814838,
+              "mean_generation_tokens_per_puzzle": 2230.2,
+              "clue_coverage_rate": 1.0,
+              "clue_validity_rate": 1.0,
+              "gold_consistency_rate": 1.0,
+              "fully_gold_consistent_puzzle_rate": 1.0
+            },
+            "paired_puzzle_accuracy_delta": 0.25
+          }
+        },
+        {
+          "seed": 22,
+          "metrics": {
+            "direct": {
+              "puzzle_accuracy": 0.7,
+              "cell_accuracy": 0.7,
+              "error_rate": 0.3,
+              "mean_generation_seconds_per_puzzle": 20.211841268721038,
+              "mean_generation_tokens_per_puzzle": 414.65
+            },
+            "symbolic": {
+              "puzzle_accuracy": 1.0,
+              "cell_accuracy": 1.0,
+              "error_rate": 0.0,
+              "mean_generation_seconds_per_puzzle": 75.18730528338347,
+              "mean_generation_tokens_per_puzzle": 1541.35,
+              "clue_coverage_rate": 1.0,
+              "clue_validity_rate": 1.0,
+              "gold_consistency_rate": 1.0,
+              "fully_gold_consistent_puzzle_rate": 1.0
+            },
+            "paired_puzzle_accuracy_delta": 0.30000000000000004
+          }
+        },
+        {
+          "seed": 33,
+          "metrics": {
+            "direct": {
+              "puzzle_accuracy": 0.8,
+              "cell_accuracy": 0.8,
+              "error_rate": 0.2,
+              "mean_generation_seconds_per_puzzle": 22.155530506256035,
+              "mean_generation_tokens_per_puzzle": 448.75
+            },
+            "symbolic": {
+              "puzzle_accuracy": 0.95,
+              "cell_accuracy": 0.95,
+              "error_rate": 0.05,
+              "mean_generation_seconds_per_puzzle": 101.18531259177253,
+              "mean_generation_tokens_per_puzzle": 1957.5,
+              "clue_coverage_rate": 1.0,
+              "clue_validity_rate": 0.9736842105263158,
+              "gold_consistency_rate": 0.9736842105263158,
+              "fully_gold_consistent_puzzle_rate": 0.95
+            },
+            "paired_puzzle_accuracy_delta": 0.1499999999999999
+          }
+        }
+      ],
+      "direct": {
+        "puzzle_accuracy": {
+          "mean": 0.75,
+          "sd": 0.050000000000000044,
+          "per_run": [
+            0.75,
+            0.7,
+            0.8
+          ]
+        },
+        "cell_accuracy": {
+          "mean": 0.75,
+          "sd": 0.050000000000000044,
+          "per_run": [
+            0.75,
+            0.7,
+            0.8
+          ]
+        },
+        "error_rate": {
+          "mean": 0.25,
+          "sd": 0.04999999999999999,
+          "per_run": [
+            0.25,
+            0.3,
+            0.2
+          ]
+        },
+        "mean_generation_seconds_per_puzzle": {
+          "mean": 20.748118693738554,
+          "sd": 1.2303000869060556,
+          "per_run": [
+            19.87698430623859,
+            20.211841268721038,
+            22.155530506256035
+          ]
+        },
+        "mean_generation_tokens_per_puzzle": {
+          "mean": 426.73333333333335,
+          "sd": 19.097272929225614,
+          "per_run": [
+            416.8,
+            414.65,
+            448.75
+          ]
+        }
+      },
+      "symbolic": {
+        "puzzle_accuracy": {
+          "mean": 0.9833333333333333,
+          "sd": 0.028867513459481315,
+          "per_run": [
+            1.0,
+            1.0,
+            0.95
+          ]
+        },
+        "cell_accuracy": {
+          "mean": 0.9833333333333333,
+          "sd": 0.028867513459481315,
+          "per_run": [
+            1.0,
+            1.0,
+            0.95
+          ]
+        },
+        "error_rate": {
+          "mean": 0.016666666666666666,
+          "sd": 0.02886751345948129,
+          "per_run": [
+            0.0,
+            0.0,
+            0.05
+          ]
+        },
+        "mean_generation_seconds_per_puzzle": {
+          "mean": 96.8635329244348,
+          "sd": 19.87100260067447,
+          "per_run": [
+            114.21798089814838,
+            75.18730528338347,
+            101.18531259177253
+          ]
+        },
+        "mean_generation_tokens_per_puzzle": {
+          "mean": 1909.6833333333332,
+          "sd": 346.9054710340171,
+          "per_run": [
+            2230.2,
+            1541.35,
+            1957.5
+          ]
+        },
+        "clue_coverage_rate": {
+          "mean": 1.0,
+          "sd": 0.0,
+          "per_run": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "clue_validity_rate": {
+          "mean": 0.9912280701754386,
+          "sd": 0.015193428136569083,
+          "per_run": [
+            1.0,
+            1.0,
+            0.9736842105263158
+          ]
+        },
+        "gold_consistency_rate": {
+          "mean": 0.9912280701754386,
+          "sd": 0.015193428136569083,
+          "per_run": [
+            1.0,
+            1.0,
+            0.9736842105263158
+          ]
+        },
+        "fully_gold_consistent_puzzle_rate": {
+          "mean": 0.9833333333333333,
+          "sd": 0.028867513459481315,
+          "per_run": [
+            1.0,
+            1.0,
+            0.95
+          ]
+        }
+      },
+      "paired_puzzle_accuracy_delta": {
+        "mean": 0.2333333333333333,
+        "sd": 0.0763762615825974,
+        "per_run": [
+          0.25,
+          0.30000000000000004,
+          0.1499999999999999
+        ]
+      }
+    },
+    "3x4": {
+      "ids": [
+        "lgp-test-3x4-19",
+        "lgp-test-3x4-10",
+        "lgp-test-3x4-13",
+        "lgp-test-3x4-18",
+        "lgp-test-3x4-2",
+        "lgp-test-3x4-7",
+        "lgp-test-3x4-36",
+        "lgp-test-3x4-31",
+        "lgp-test-3x4-28",
+        "lgp-test-3x4-22",
+        "lgp-test-3x4-21",
+        "lgp-test-3x4-9",
+        "lgp-test-3x4-38",
+        "lgp-test-3x4-33",
+        "lgp-test-3x4-24",
+        "lgp-test-3x4-6",
+        "lgp-test-3x4-14",
+        "lgp-test-3x4-37",
+        "lgp-test-3x4-0",
+        "lgp-test-3x4-15"
+      ],
+      "runs": [
+        {
+          "seed": 11,
+          "metrics": {
+            "direct": {
+              "puzzle_accuracy": 0.55,
+              "cell_accuracy": 0.55,
+              "error_rate": 0.45,
+              "mean_generation_seconds_per_puzzle": 174.9100444707554,
+              "mean_generation_tokens_per_puzzle": 3145.8
+            },
+            "symbolic": {
+              "puzzle_accuracy": 0.8,
+              "cell_accuracy": 0.8,
+              "error_rate": 0.2,
+              "mean_generation_seconds_per_puzzle": 411.19124747498427,
+              "mean_generation_tokens_per_puzzle": 8195.9,
+              "clue_coverage_rate": 1.0,
+              "clue_validity_rate": 0.937984496124031,
+              "gold_consistency_rate": 0.937984496124031,
+              "fully_gold_consistent_puzzle_rate": 0.8
+            },
+            "paired_puzzle_accuracy_delta": 0.25
+          }
+        },
+        {
+          "seed": 22,
+          "metrics": {
+            "direct": {
+              "puzzle_accuracy": 0.55,
+              "cell_accuracy": 0.55,
+              "error_rate": 0.45,
+              "mean_generation_seconds_per_puzzle": 146.97339953957126,
+              "mean_generation_tokens_per_puzzle": 2921.5
+            },
+            "symbolic": {
+              "puzzle_accuracy": 0.85,
+              "cell_accuracy": 0.85,
+              "error_rate": 0.15,
+              "mean_generation_seconds_per_puzzle": 384.76576825384984,
+              "mean_generation_tokens_per_puzzle": 7499.1,
+              "clue_coverage_rate": 1.0,
+              "clue_validity_rate": 0.9767441860465116,
+              "gold_consistency_rate": 0.9767441860465116,
+              "fully_gold_consistent_puzzle_rate": 0.85
+            },
+            "paired_puzzle_accuracy_delta": 0.29999999999999993
+          }
+        },
+        {
+          "seed": 33,
+          "metrics": {
+            "direct": {
+              "puzzle_accuracy": 0.75,
+              "cell_accuracy": 0.75,
+              "error_rate": 0.25,
+              "mean_generation_seconds_per_puzzle": 142.17052019797265,
+              "mean_generation_tokens_per_puzzle": 2867.25
+            },
+            "symbolic": {
+              "puzzle_accuracy": 0.75,
+              "cell_accuracy": 0.75,
+              "error_rate": 0.25,
+              "mean_generation_seconds_per_puzzle": 461.4606676479336,
+              "mean_generation_tokens_per_puzzle": 8847.8,
+              "clue_coverage_rate": 1.0,
+              "clue_validity_rate": 0.9534883720930233,
+              "gold_consistency_rate": 0.9534883720930233,
+              "fully_gold_consistent_puzzle_rate": 0.75
+            },
+            "paired_puzzle_accuracy_delta": 0.0
+          }
+        }
+      ],
+      "direct": {
+        "puzzle_accuracy": {
+          "mean": 0.6166666666666667,
+          "sd": 0.11547005383792514,
+          "per_run": [
+            0.55,
+            0.55,
+            0.75
+          ]
+        },
+        "cell_accuracy": {
+          "mean": 0.6166666666666667,
+          "sd": 0.11547005383792514,
+          "per_run": [
+            0.55,
+            0.55,
+            0.75
+          ]
+        },
+        "error_rate": {
+          "mean": 0.38333333333333336,
+          "sd": 0.11547005383792516,
+          "per_run": [
+            0.45,
+            0.45,
+            0.25
+          ]
+        },
+        "mean_generation_seconds_per_puzzle": {
+          "mean": 154.68465473609976,
+          "sd": 17.679556129369413,
+          "per_run": [
+            174.9100444707554,
+            146.97339953957126,
+            142.17052019797265
+          ]
+        },
+        "mean_generation_tokens_per_puzzle": {
+          "mean": 2978.1833333333334,
+          "sd": 147.6728676275143,
+          "per_run": [
+            3145.8,
+            2921.5,
+            2867.25
+          ]
+        }
+      },
+      "symbolic": {
+        "puzzle_accuracy": {
+          "mean": 0.8,
+          "sd": 0.04999999999999999,
+          "per_run": [
+            0.8,
+            0.85,
+            0.75
+          ]
+        },
+        "cell_accuracy": {
+          "mean": 0.8,
+          "sd": 0.04999999999999999,
+          "per_run": [
+            0.8,
+            0.85,
+            0.75
+          ]
+        },
+        "error_rate": {
+          "mean": 0.2,
+          "sd": 0.05,
+          "per_run": [
+            0.2,
+            0.15,
+            0.25
+          ]
+        },
+        "mean_generation_seconds_per_puzzle": {
+          "mean": 419.1392277922559,
+          "sd": 38.960296349103395,
+          "per_run": [
+            411.19124747498427,
+            384.76576825384984,
+            461.4606676479336
+          ]
+        },
+        "mean_generation_tokens_per_puzzle": {
+          "mean": 8180.933333333333,
+          "sd": 674.4745535106069,
+          "per_run": [
+            8195.9,
+            7499.1,
+            8847.8
+          ]
+        },
+        "clue_coverage_rate": {
+          "mean": 1.0,
+          "sd": 0.0,
+          "per_run": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "clue_validity_rate": {
+          "mean": 0.9560723514211886,
+          "sd": 0.0195086161118107,
+          "per_run": [
+            0.937984496124031,
+            0.9767441860465116,
+            0.9534883720930233
+          ]
+        },
+        "gold_consistency_rate": {
+          "mean": 0.9560723514211886,
+          "sd": 0.0195086161118107,
+          "per_run": [
+            0.937984496124031,
+            0.9767441860465116,
+            0.9534883720930233
+          ]
+        },
+        "fully_gold_consistent_puzzle_rate": {
+          "mean": 0.8,
+          "sd": 0.04999999999999999,
+          "per_run": [
+            0.8,
+            0.85,
+            0.75
+          ]
+        }
+      },
+      "paired_puzzle_accuracy_delta": {
+        "mean": 0.18333333333333332,
+        "sd": 0.1607275126832159,
+        "per_run": [
+          0.25,
+          0.29999999999999993,
+          0.0
+        ]
+      }
+    },
+    "4x4": {
+      "ids": [
+        "lgp-test-4x4-27",
+        "lgp-test-4x4-3",
+        "lgp-test-4x4-21",
+        "lgp-test-4x4-16",
+        "lgp-test-4x4-13",
+        "lgp-test-4x4-26",
+        "lgp-test-4x4-28",
+        "lgp-test-4x4-36",
+        "lgp-test-4x4-35",
+        "lgp-test-4x4-10",
+        "lgp-test-4x4-9",
+        "lgp-test-4x4-19",
+        "lgp-test-4x4-29",
+        "lgp-test-4x4-14",
+        "lgp-test-4x4-30",
+        "lgp-test-4x4-2",
+        "lgp-test-4x4-5",
+        "lgp-test-4x4-11",
+        "lgp-test-4x4-24",
+        "lgp-test-4x4-23"
+      ],
+      "runs": [
+        {
+          "seed": 11,
+          "metrics": {
+            "direct": {
+              "puzzle_accuracy": 0.65,
+              "cell_accuracy": 0.65,
+              "error_rate": 0.35,
+              "mean_generation_seconds_per_puzzle": 298.18407705202696,
+              "mean_generation_tokens_per_puzzle": 5555.2
+            },
+            "symbolic": {
+              "puzzle_accuracy": 0.55,
+              "cell_accuracy": 0.55,
+              "error_rate": 0.45,
+              "mean_generation_seconds_per_puzzle": 733.1866260146256,
+              "mean_generation_tokens_per_puzzle": 13920.05,
+              "clue_coverage_rate": 0.9900497512437811,
+              "clue_validity_rate": 0.9253731343283582,
+              "gold_consistency_rate": 0.9253731343283582,
+              "fully_gold_consistent_puzzle_rate": 0.55
+            },
+            "paired_puzzle_accuracy_delta": -0.09999999999999998
+          }
+        },
+        {
+          "seed": 22,
+          "metrics": {
+            "direct": {
+              "puzzle_accuracy": 0.65,
+              "cell_accuracy": 0.65,
+              "error_rate": 0.35,
+              "mean_generation_seconds_per_puzzle": 293.5464873543475,
+              "mean_generation_tokens_per_puzzle": 5481.45
+            },
+            "symbolic": {
+              "puzzle_accuracy": 0.7,
+              "cell_accuracy": 0.7,
+              "error_rate": 0.3,
+              "mean_generation_seconds_per_puzzle": 733.0871738918825,
+              "mean_generation_tokens_per_puzzle": 13906.0,
+              "clue_coverage_rate": 1.0,
+              "clue_validity_rate": 0.9402985074626866,
+              "gold_consistency_rate": 0.9402985074626866,
+              "fully_gold_consistent_puzzle_rate": 0.7
+            },
+            "paired_puzzle_accuracy_delta": 0.04999999999999993
+          }
+        },
+        {
+          "seed": 33,
+          "metrics": {
+            "direct": {
+              "puzzle_accuracy": 0.55,
+              "cell_accuracy": 0.55,
+              "error_rate": 0.45,
+              "mean_generation_seconds_per_puzzle": 285.85014020628296,
+              "mean_generation_tokens_per_puzzle": 5428.8
+            },
+            "symbolic": {
+              "puzzle_accuracy": 0.85,
+              "cell_accuracy": 0.85,
+              "error_rate": 0.15,
+              "mean_generation_seconds_per_puzzle": 665.8802644207375,
+              "mean_generation_tokens_per_puzzle": 12807.3,
+              "clue_coverage_rate": 1.0,
+              "clue_validity_rate": 0.9800995024875622,
+              "gold_consistency_rate": 0.9800995024875622,
+              "fully_gold_consistent_puzzle_rate": 0.85
+            },
+            "paired_puzzle_accuracy_delta": 0.29999999999999993
+          }
+        }
+      ],
+      "direct": {
+        "puzzle_accuracy": {
+          "mean": 0.6166666666666667,
+          "sd": 0.05773502691896257,
+          "per_run": [
+            0.65,
+            0.65,
+            0.55
+          ]
+        },
+        "cell_accuracy": {
+          "mean": 0.6166666666666667,
+          "sd": 0.05773502691896257,
+          "per_run": [
+            0.65,
+            0.65,
+            0.55
+          ]
+        },
+        "error_rate": {
+          "mean": 0.3833333333333333,
+          "sd": 0.057735026918962595,
+          "per_run": [
+            0.35,
+            0.35,
+            0.45
+          ]
+        },
+        "mean_generation_seconds_per_puzzle": {
+          "mean": 292.5269015375525,
+          "sd": 6.229860829670081,
+          "per_run": [
+            298.18407705202696,
+            293.5464873543475,
+            285.85014020628296
+          ]
+        },
+        "mean_generation_tokens_per_puzzle": {
+          "mean": 5488.483333333334,
+          "sd": 63.49284080377339,
+          "per_run": [
+            5555.2,
+            5481.45,
+            5428.8
+          ]
+        }
+      },
+      "symbolic": {
+        "puzzle_accuracy": {
+          "mean": 0.7,
+          "sd": 0.14999999999999997,
+          "per_run": [
+            0.55,
+            0.7,
+            0.85
+          ]
+        },
+        "cell_accuracy": {
+          "mean": 0.7,
+          "sd": 0.14999999999999997,
+          "per_run": [
+            0.55,
+            0.7,
+            0.85
+          ]
+        },
+        "error_rate": {
+          "mean": 0.3,
+          "sd": 0.15000000000000002,
+          "per_run": [
+            0.45,
+            0.3,
+            0.15
+          ]
+        },
+        "mean_generation_seconds_per_puzzle": {
+          "mean": 710.7180214424152,
+          "sd": 38.83066846878168,
+          "per_run": [
+            733.1866260146256,
+            733.0871738918825,
+            665.8802644207375
+          ]
+        },
+        "mean_generation_tokens_per_puzzle": {
+          "mean": 13544.449999999999,
+          "sd": 638.4292776024611,
+          "per_run": [
+            13920.05,
+            13906.0,
+            12807.3
+          ]
+        },
+        "clue_coverage_rate": {
+          "mean": 0.9966832504145937,
+          "sd": 0.005744778797906698,
+          "per_run": [
+            0.9900497512437811,
+            1.0,
+            1.0
+          ]
+        },
+        "clue_validity_rate": {
+          "mean": 0.9485903814262023,
+          "sd": 0.028289754741678223,
+          "per_run": [
+            0.9253731343283582,
+            0.9402985074626866,
+            0.9800995024875622
+          ]
+        },
+        "gold_consistency_rate": {
+          "mean": 0.9485903814262023,
+          "sd": 0.028289754741678223,
+          "per_run": [
+            0.9253731343283582,
+            0.9402985074626866,
+            0.9800995024875622
+          ]
+        },
+        "fully_gold_consistent_puzzle_rate": {
+          "mean": 0.7,
+          "sd": 0.14999999999999997,
+          "per_run": [
+            0.55,
+            0.7,
+            0.85
+          ]
+        }
+      },
+      "paired_puzzle_accuracy_delta": {
+        "mean": 0.0833333333333333,
+        "sd": 0.20207259421636897,
+        "per_run": [
+          -0.09999999999999998,
+          0.04999999999999993,
+          0.29999999999999993
+        ]
+      }
+    }
+  }
+}
