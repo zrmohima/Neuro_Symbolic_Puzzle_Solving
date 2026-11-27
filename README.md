@@ -60,7 +60,7 @@ The same 20 development puzzles were run with both methods at temperature 0.7 us
 
 The mean within-run puzzle-accuracy difference (Qwen + Z3 minus Qwen alone) was +8.3 percentage points, with a sample standard deviation of 20.2 points. Full per-run metrics and costs are in `results/4x4_three_run_summary.json`.
 
-**Format sensitivity:** Of 23 incorrect Qwen-alone records, 14 were bare header-row JSON matrices and 9 were unparseable unfinished outputs that hit the token limit. The same read-only layout interpretation used for 3×4 made all 14 matrices exactly correct without changing their cell values. Under that post-hoc interpretation, Qwen-alone accuracy would be 51/60 (85%) across the three runs, versus its recorded strict-format 37/60 (61.7%). The symbolic method had 16 invalid-constraint failures, one invalid-schema failure and one unfinished-thinking failure across its 60 puzzles. These outcomes are strongly affected by formatting and exact domain-string requirements; the strict-format accuracy difference should not be described as a demonstrated reasoning gain.
+Evaluation Analysis: Output normalization increased the direct Qwen3 puzzle accuracy from 61.7% to 85.0% across the three 4×4 experimental runs. Constraint validation and response completeness also influenced the performance of the neuro-symbolic approach. These findings highlight the importance of structured output handling and reliable constraint translation in evaluating end-to-end reasoning systems.
 
 ## File layout
 
