@@ -14,7 +14,7 @@ Twenty puzzles were evaluated per size, using identical puzzle IDs for both appr
 | 4×4 | Qwen alone | 14/20 | 70% | 70% |
 | 4×4 | Qwen + Z3 | 13/20 | 65% | 65% |
 
-These are selected development results from **one run per size**, not held-out test results or three-run averages. The 4×4 approach was selected after inspecting development experiments. Later variants performed worse and are not included in this focused package. Do not interpret this table as showing that the hybrid approach improves accuracy. Failed parsing/translation counts as an incorrect puzzle with zero credited cells. Cell scoring excludes house-number cells.
+These preliminary results represent individual development runs using identical puzzle instances for both approaches. The 4×4 configuration was selected through exploratory experimentation, and subsequent variants with lower performance are not included in this comparison. These findings are reported separately from the multi-seed evaluation and do not establish an accuracy improvement from integrating Z3. Unsuccessful predictions receive zero credit, and house-number cells are excluded from cell accuracy calculations.
 
 ## Three-run 2×2 results
 
@@ -70,8 +70,7 @@ Evaluation Analysis: Output normalization increased the direct Qwen3 puzzle accu
 - `tests/`: translation-evaluation regression tests.
 - `req.txt`: exact dependency versions from the local experiment environment.
 - `datasets/public/`: public grid-mode Parquet with hidden answers.
-- `datasets/private/`: user-provided grid-mode and multiple-choice files with answers; included for local reproduction, Git-ignored.
-- `datasets/metadata/`: download metadata, dataset checksum and pinned model revision.
+- `datasets/private/`: Authorized reference datasets used for evaluation; excluded from version control.- `datasets/metadata/`: download metadata, dataset checksum and pinned model revision.
 - `prompts/<size>/inputs.jsonl`: exact rendered model inputs, including the chat template.
 - `outputs/<size>/responses.jsonl`: raw model responses, token counts, timing and stop reasons. Join prompts and responses by `key`.
 - `outputs/<size>/original_predictions.jsonl`: unmodified original per-puzzle records.
@@ -124,8 +123,9 @@ Defaults: thinking enabled for both methods, greedy decoding, seed 0, 8,192 gene
 
 ## Translation evaluation
 
-For every symbolic puzzle, the runner records `translation_eval` in `predictions.jsonl`. It checks each numbered clue for one generated relation, validates its operation and position terms against the puzzle domains, and evaluates that relation on the authorized reference solution. The summary reports clue coverage, valid clues, gold-consistent clues, and puzzles for which every clue is gold-consistent. Missing, duplicate, malformed and gold-contradicting clues receive no gold-consistency credit. This is a **necessary-condition metric**: a wrong or overly weak relation can still be true of the reference solution. To measure semantic fidelity directly, have an annotator independently label each clue with the intended relation and compare the generated relations with those labels, or have annotators judge equivalence blind to the model output. Z3 satisfiability and uniqueness also do not prove translation fidelity.
+The framework evaluates individual clue translations based on coverage, structural validity, and consistency with the reference solution. Each generated relation is validated against the corresponding puzzle domains before symbolic solving. Missing, duplicate, invalid, and reference-inconsistent relations receive no gold-consistency credit.
 
+Gold consistency measures whether a translated relation is satisfied by the reference solution but does not establish semantic equivalence with the original natural-language clue. Similarly, Z3 satisfiability and uniqueness checks establish properties of the encoded constraints rather than the semantic correctness of their translations.
 To evaluate the existing saved translations after installation, run `.venv/bin/python scripts/evaluate_archived_translations.py`. It writes `results/archived_translation_eval.json` and does not regenerate predictions. That report still describes one run per size.
 
 ## Three-run experiment
@@ -136,11 +136,11 @@ After installing the dependencies, downloading the model, and placing both grid-
 .venv/bin/python scripts/repeat_experiment.py run
 ```
 
-This runs three separate seeds (11, 22, 33) at temperature 0.7 for each size, with the same 20 puzzle IDs, prompt, model, token budget, and scoring in both methods. Each run has its own directory under `runs/repeated/` and can resume after interruption. After all nine size/seed runs finish, the script writes `results/repeated_summary.json` with each run's puzzle accuracy, cell accuracy, failure rate, generation cost, clue coverage, clue validity, gold consistency, and per-size means and sample standard deviations. It also reports the within-run difference in puzzle accuracy between symbolic and direct. Recompute the summary without generating model calls with `.venv/bin/python scripts/repeat_experiment.py summarize`. Do not average across puzzle sizes; they have different difficulty. The existing archived greedy runs cannot substitute for independent sampled replicates.
+This runs three separate seeds (11, 22, 33) at temperature 0.7 for each size, with the same 20 puzzle IDs, prompt, model, token budget, and scoring in both methods. Each run has its own directory under `runs/repeated/` and can resume after interruption. After all nine size/seed runs finish, the script writes `results/repeated_summary.json` with each run's puzzle accuracy, cell accuracy, failure rate, generation cost, clue coverage, clue validity, gold consistency, and per-size means and sample standard deviations. It also reports the within-run difference in puzzle accuracy between symbolic and direct. Recompute the summary without generating model calls with `.venv/bin/python scripts/repeat_experiment.py summarize`. Results are reported separately for each puzzle size to account for differences in puzzle complexity. Preliminary greedy-decoding experiments are excluded from the multi-seed statistical analysis.
 
 For a 3×4-only experiment, run the three seeds under `runs/repeated/3x4/`, then summarize with `.venv/bin/python scripts/repeat_experiment.py summarize --size 3x4 --report results/3x4_three_run_summary.json`. The summarizer requires all three completed runs with identical puzzle IDs and settings.
 
-The prompt asks direct solving to check clues and category uniqueness. The table validator accepts harmless layout variations, sorts house rows, and rejects missing/duplicate houses and incomplete tables. No values are filled in or corrected. Scores compare values case-insensitively after trimming outer whitespace.
+The direct reasoning prompt requires satisfaction of all clues and category uniqueness constraints. The table validator supports permitted output formats, orders house rows, and checks for missing or duplicate houses and incomplete solutions. Predicted attribute values are preserved without correction, and evaluation uses case-insensitive comparisons after removing surrounding whitespace.
 
 `--prepare-only` checks selection and answers without loading MLX. The model config must exist first. Rerun an identical command to resume from saved calls. Do not run multiple processes against the same output directory. `--max-tokens` or `--no-thinking` changes the experiment; choose a different output directory. Runtime metrics count model generation, not complete wall time or dataset/model downloads.
 
