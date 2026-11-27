@@ -1,7 +1,6 @@
 # Qwen3-8B and Z3: ZebraLogicBench experiments
 
-A clean code and results package for the selected thinking-enabled experiments. Earlier exploratory variants, curated Z3 baselines, environments, caches and model weights are excluded. Existing workspace files were not deleted or renamed.
-
+This project investigates the effectiveness of neuro-symbolic reasoning for solving logic grid puzzles using Qwen3-8B and Z3. Using ZebraLogicBench, we compare direct LLM-based reasoning with a neuro-symbolic framework that translates natural-language clues into formal logical constraints. The evaluation examines puzzle accuracy, constraint translation consistency, computational efficiency, and system reliability.
 ## Selected results
 
 Twenty puzzles were evaluated per size, using identical puzzle IDs for both approaches.
@@ -81,11 +80,21 @@ Evaluation Analysis: Output normalization increased the direct Qwen3 puzzle accu
 - `scripts/repeat_experiment.py`: three independent sampled runs per size and mean/standard-deviation report.
 - `scripts/evaluate_archived_translations.py`: score saved single-run translations against local reference answers without regenerating text.
 
-## Dataset access and Git
+## Dataset
 
-Source: https://huggingface.co/datasets/allenai/ZebraLogicBench . Official answer dataset: https://huggingface.co/datasets/allenai/ZebraLogicBench-private . The private files require authorized access. Both public and private dataset files are excluded by `.gitignore`. The ZIP includes them for your local reproduction; do not upload the entire ZIP as a public Git asset or force-add those files unless redistribution is permitted. Clone users should obtain their own files and put them at `datasets/public/grid_mode.parquet`, `datasets/private/grid_mode.parquet` and, if needed, `datasets/private/mc_mode.parquet`.
+This project uses ZebraLogicBench to evaluate logical reasoning through structured logic grid puzzles.
 
-The experiments use grid mode only. Multiple-choice mode is included as requested but was not evaluated. Raw predictions may reproduce correct puzzle solutions; review what you intend to publish under the dataset's access conditions. No credentials are included.
+- Public benchmark: [ZebraLogicBench](https://huggingface.co/datasets/allenai/ZebraLogicBench)
+- Reference solutions: [ZebraLogicBench-private](https://huggingface.co/datasets/allenai/ZebraLogicBench-private)
+
+All reported experiments use the grid-mode dataset. Reference solutions are used exclusively for evaluation.
+
+Dataset files are excluded from version control and must be obtained independently. Place the required files in the following directories:
+
+- `datasets/public/grid_mode.parquet`
+- `datasets/private/grid_mode.parquet`
+
+Access to the private reference dataset requires authorization. Dataset and prediction redistribution must comply with the original dataset's access conditions.
 
 ## Install (Apple Silicon Mac)
 
@@ -135,20 +144,12 @@ The prompt asks direct solving to check clues and category uniqueness. The table
 
 `--prepare-only` checks selection and answers without loading MLX. The model config must exist first. Rerun an identical command to resume from saved calls. Do not run multiple processes against the same output directory. `--max-tokens` or `--no-thinking` changes the experiment; choose a different output directory. Runtime metrics count model generation, not complete wall time or dataset/model downloads.
 
-## Historical results and validator change
+## Evaluation Protocol and Reproducibility
 
-The selected 4×4 direct result was rescored from saved original responses with the updated table validator: 14/20, versus the original stricter format acceptance. The archive preserves both original records and evaluated records; no answers were regenerated to obtain that score. The hybrid result is unchanged. The 2×2 and 3×4 runs used the updated validator during execution.
+The preliminary 4×4 direct reasoning results were reevaluated using an updated output validator, yielding a puzzle accuracy of 70.0% without regenerating model responses or modifying predicted attribute values. The corresponding neuro-symbolic result remained unchanged.
 
-Archived manifests contain original workspace-relative paths and historical source hashes, retained for provenance. The cleaned code uses new paths/names, so its source hashes differ; archived runs must not be used as resume directories. Use `runs/` for new runs. Exact original prompts and responses remain available for inspection.
+Original predictions, evaluated outputs, experimental configurations, and provenance metadata are preserved to support reproducibility and transparency. Preliminary single-run results and subsequent multi-seed experiments are reported separately.
 
-## Upload the extracted project to Git
+New experiments should use dedicated output directories rather than archived result directories.
 
-After reviewing dataset access and intended repository visibility:
 
-```sh
-git init
-git add .
-git status
-```
-
-Check the staged files before committing. The included `.gitignore` excludes public and private dataset files, future run directories, weights, caches and environments.
